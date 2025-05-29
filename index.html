@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Autos Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #d4af37;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.3));
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #d4af37, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #b8860b;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 25px;
+            color: #d4af37;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+
+        .tab:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .tab.active {
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.3), rgba(255, 215, 0, 0.3));
+            border-color: #d4af37;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            color: #ffd700;
+        }
+
+        .tier-info {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tier-info h2 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .tier-info p {
+            color: rgba(212, 175, 55, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .price-range {
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.3), rgba(255, 215, 0, 0.3));
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .car-card {
+            background: linear-gradient(145deg, rgba(42, 42, 42, 0.95), rgba(26, 26, 26, 0.95));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .car-info {
+            padding: 20px;
+        }
+
+        .car-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #d4af37;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .car-description {
+            color: #b8860b;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .car-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .loading {
+            text-align: center;
+            color: #d4af37;
+            font-size: 1.2rem;
+            padding: 50px;
+        }
+
+        .tier-content {
+            display: none;
+        }
+
+        .tier-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tab {
+                width: 200px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://samatva.blr1.cdn.digitaloceanspaces.com/images/luxury-autos.png" alt="Luxury Autos Logo"
+                class="logo">
+            <h1>Luxury Autos Collection</h1>
+            <p>Premium vehicles for the discerning driver</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tier="all">All Vehicles</div>
+            <div class="tab" data-tier="tier1">Tier 1</div>
+            <div class="tab" data-tier="tier2">Tier 2</div>
+            <div class="tab" data-tier="tier3">Tier 3</div>
+            <div class="tab" data-tier="tier4">Tier 4</div>
+        </div>
+
+        <div id="tier-info" class="tier-info" style="display: none;">
+            <h2 id="tier-name"></h2>
+            <p id="tier-description"></p>
+            <div id="tier-price" class="price-range"></div>
+        </div>
+
+        <div id="loading" class="loading">Loading vehicles...</div>
+        <div id="cars-container" class="cars-grid" style="display: none;"></div>
+    </div>
+
+    <script>
+        let carsData = null;
+        let currentTier = 'all';
+
+        async function fetchCarsData() {
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/Samatva-RolePlay/Samatva-Website/refs/heads/main/luxury-autos-data.json');
+                carsData = await response.json();
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('cars-container').style.display = 'grid';
+                displayCars('all');
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('loading').innerHTML = 'Error loading data. Please try again later.';
+            }
+        }
+
+        function displayCars(tier) {
+            if (!carsData) return;
+
+            const container = document.getElementById('cars-container');
+            const tierInfo = document.getElementById('tier-info');
+
+            let vehiclesToShow = carsData.vehicles;
+
+            if (tier !== 'all') {
+                vehiclesToShow = carsData.vehicles.filter(car => car.tier === tier);
+
+                const tierData = carsData.tiers.find(t => t.id === tier);
+                if (tierData) {
+                    document.getElementById('tier-name').textContent = tierData.name;
+                    document.getElementById('tier-description').textContent = tierData.description;
+                    document.getElementById('tier-price').textContent = tierData.priceRange || '';
+                    tierInfo.style.display = 'block';
+                }
+            } else {
+                tierInfo.style.display = 'none';
+            }
+
+            container.innerHTML = vehiclesToShow.map(car => `
+                <div class="car-card">
+                    <img src="${car.image}" alt="${car.name}" class="car-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjVmNWY1Ii8+CjxwYXRoIGQ9Ik0xNTAgMTAwTDEyMCA4MEgxODBMMTUwIDEwMFoiIGZpbGw9IiNjY2MiLz4KPHN2Zz4K'">
+                    <div class="car-info">
+                        <div class="car-name">${car.name}</div>
+                        <div class="car-description">${car.description}</div>
+                        <div class="car-price">$${car.price.toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const tier = tab.getAttribute('data-tier');
+                    currentTier = tier;
+                    displayCars(tier);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupTabs();
+            fetchCarsData();
+        });
+    </script>
+</body>
+
+</html>
