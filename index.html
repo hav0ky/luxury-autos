@@ -7,7 +7,7 @@
     <title>Luxury Autos Collection</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -38,13 +38,11 @@
             width: 120px;
             height: auto;
             margin-bottom: 20px;
-            filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.3));
         }
 
         .header h1 {
             font-size: 3rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             background: linear-gradient(45deg, #d4af37, #ffd700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -53,7 +51,6 @@
 
         .header p {
             font-size: 1.2rem;
-            opacity: 0.9;
             color: #b8860b;
         }
 
@@ -72,22 +69,17 @@
             border-radius: 25px;
             color: #d4af37;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
             font-weight: 600;
+            transition: background-color 0.2s ease;
         }
 
         .tab:hover {
             background: rgba(212, 175, 55, 0.2);
-            border-color: rgba(212, 175, 55, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
         }
 
         .tab.active {
-            background: linear-gradient(45deg, rgba(212, 175, 55, 0.3), rgba(255, 215, 0, 0.3));
+            background: rgba(212, 175, 55, 0.3);
             border-color: #d4af37;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
             color: #ffd700;
         }
 
@@ -98,14 +90,12 @@
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 15px;
-            backdrop-filter: blur(10px);
         }
 
         .tier-info h2 {
             color: #d4af37;
             font-size: 2rem;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .tier-info p {
@@ -115,46 +105,12 @@
 
         .price-range {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(255, 215, 0, 0.6), rgba(212, 175, 55, 0.4));
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            box-shadow: 
-                0 0 20px rgba(212, 175, 55, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
             padding: 12px 20px;
             border-radius: 25px;
             display: inline-block;
             margin-top: 15px;
             color: #ffd700;
             font-weight: 700;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .price-range::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .price-range:hover::before {
-            left: 100%;
-        }
-
-        .price-range:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 0 30px rgba(212, 175, 55, 0.6),
-                0 5px 15px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
         }
 
         .cars-grid {
@@ -170,14 +126,6 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .car-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
-            border-color: rgba(212, 175, 55, 0.4);
         }
 
         .car-image {
@@ -185,6 +133,7 @@
             height: 200px;
             object-fit: cover;
             object-position: center;
+            display: block;
         }
 
         .car-info {
@@ -196,7 +145,6 @@
             font-weight: 700;
             margin-bottom: 8px;
             color: #d4af37;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .car-description {
@@ -209,7 +157,6 @@
             font-size: 1.3rem;
             font-weight: 700;
             color: #ffd700;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .loading {
@@ -274,7 +221,6 @@
 
     <script>
         let carsData = null;
-        let currentTier = 'all';
 
         async function fetchCarsData() {
             try {
@@ -317,35 +263,36 @@
                 tierInfo.style.display = 'none';
             }
 
-            container.innerHTML = vehiclesToShow.map(car => `
-                <div class="car-card">
-                    <img src="${car.image}" alt="${car.name}" class="car-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjVmNWY1Ii8+CjxwYXRoIGQ9Ik0xNTAgMTAwTDEyMCA4MEgxODBMMTUwIDEwMFoiIGZpbGw9IiNjY2MiLz4KPHN2Zz4K'">
+            const fragment = document.createDocumentFragment();
+            vehiclesToShow.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.className = 'car-card';
+                carCard.innerHTML = `
+                    <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjVmNWY1Ii8+CjxwYXRoIGQ9Ik0xNTAgMTAwTDEyMCA4MEgxODBMMTUwIDEwMFoiIGZpbGw9IiNjY2MiLz4KPHN2Zz4K'">
                     <div class="car-info">
                         <div class="car-name">${car.name}</div>
                         <div class="car-description">${car.description}</div>
                         <div class="car-price">$${car.price.toLocaleString()}</div>
                     </div>
-                </div>
-            `).join('');
+                `;
+                fragment.appendChild(carCard);
+            });
+            
+            container.innerHTML = '';
+            container.appendChild(fragment);
         }
 
-        function setupTabs() {
+        document.addEventListener('DOMContentLoaded', () => {
             const tabs = document.querySelectorAll('.tab');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-
-                    const tier = tab.getAttribute('data-tier');
-                    currentTier = tier;
-                    displayCars(tier);
+                    displayCars(tab.getAttribute('data-tier'));
                 });
             });
-        }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            setupTabs();
             fetchCarsData();
         });
     </script>
